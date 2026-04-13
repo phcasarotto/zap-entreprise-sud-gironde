@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>ZAP Gironde</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body { margin:0; font-family: Arial, sans-serif; }
+
+#map { height: 100vh; }
+
+.titre {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.label {
+  background: white;
+  padding: 3px 7px;
+  border-radius: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="titre">Carte ZAP - Gironde</div>
+<div id="map"></div>
+
+<script>
+var map = L.map('map').setView([44.84, -0.58], 9);
+
+L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap France',
+  maxZoom: 19
+}).addTo(map);
+
+function addZAP(lat, lng, nom, lien, color) {
+  var marker = L.circleMarker([lat, lng], {
+    radius: 9,
+    color: "#fff",
+    weight: 2,
+    fillColor: color,
+    fillOpacity: 0.95
+  }).addTo(map);
+
+  marker.bindTooltip(nom, {permanent:true, direction:"top"});
+
+  marker.on("click", function(){
+    if(lien.startsWith("http")){
+      window.open(lien, "_blank");
+    } else {
+      alert(lien);
+    }
+  });
+}
+
+addZAP(44.87, -0.58, "Bordeaux Nord", "en cours de réalisation", "#e74c3c");
+addZAP(44.82, -0.59, "Bordeaux Sud", "en cours de réalisation", "#3498db");
+addZAP(44.84, -0.68, "Mérignac", "en cours de réalisation", "#2ecc71");
+addZAP(44.88, -0.52, "Rive Droite", "en cours de réalisation", "#f1c40f");
+addZAP(44.92, -0.24, "Libourne", "en cours de réalisation", "#9b59b6");
+addZAP(45.13, -0.66, "Blaye", "en cours de réalisation", "#e67e22");
+addZAP(45.30, -0.95, "Médoc", "en cours de réalisation", "#1abc9c");
+addZAP(44.66, -1.17, "Arcachon", "en cours de réalisation", "#34495e");
+addZAP(44.55, -0.24, "Sud-Gironde", "https://chatmd.forge.apps.education.fr//#https://codimd.apps.education.fr/s/KmrYAzCNQ%23", "#fd79a8");
+</script>
+
+</body>
+</html>
